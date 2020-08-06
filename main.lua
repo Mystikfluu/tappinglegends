@@ -9,7 +9,11 @@ Main:Button("Use all codes", function()
   game:GetService("ReplicatedStorage").RemoteFunctions.CodeActivated:InvokeServer(unpack(args))
 end
 end)
-Main:Toggle("Auto craft pets", function(toggle)
+
+_G.deletedm = -9e9
+_G.deletecm = -9e9
+local Pets = w:CreateFolder("Pets")
+Pets:Toggle("Auto craft pets", function(toggle)
 spawn(function()
 _G.togglecraft = toggle
 while wait(0.1) and _G.togglecraft do
@@ -24,13 +28,10 @@ while wait(0.1) and _G.togglecraft do
 end
 end)
 end)
-_G.deletedm = -9e9
-_G.deletecm = -9e9
-
-Main:Label("Auto delete is if below both configurable values, Auto delete2 is if below one Value.")
+Pets:Label("Auto delete is if below both configurable values, Auto delete2 is if below one Value.")
 warn("Auto delete is if below both configurable values, Auto delete2 is if below one Value.")
 print("Auto delete deletes Pets which have their Multipliers below the point of the configurable values called 'DeleteClicks' and 'DeleteDiamonds'")
-Main:Toggle("Auto delete", function(toggle)
+Pets:Toggle("Auto delete", function(toggle)
 spawn(function()
 _G.delete = toggle
 while wait(0.1) and _G.delete do
@@ -47,7 +48,7 @@ end
 end
 end)
 end)
-Main:Toggle("Auto delete2", function(toggle)
+Pets:Toggle("Auto delete2", function(toggle)
 spawn(function()
 _G.delete = toggle
 while wait(0.1) and _G.delete do
@@ -64,6 +65,7 @@ end
 end
 end)
 end)
+local stuff = w:CreateFolder("Stuff.")
 if(_G.ws == nil) then
 _G.ws = 16
 end
@@ -73,12 +75,44 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.ws
 end)
 _G.speed = true
 end
-Main:Box("DeleteClicks", "number", function(value)
+Pets:Box("DeleteClicks", "number", function(value)
 _G.deletecm = value
 end)
-Main:Box("DeleteDiamonds", "number", function(value)
+Pets:Box("DeleteDiamonds", "number", function(value)
 _G.deletedm = value
 end)
-Main:Box("WalkSpeed", "number", function(value)
+stuff:Box("WalkSpeed", "number", function(value)
 _G.ws = tonumber(value)
+end)
+local Eggs = w:CreateFolder("Eggs")
+Eggs:Toggle("Open one", function(toggle)
+spawn(function()
+_G.one = toggle
+while wait(0.1) and _G.one do
+if(_G.egg) then
+local args = {
+[1] = _G.egg,
+[2] = "E"
+}
+game:GetService("ReplicatedStorage").RemoteEvents.EggOpen:FireServer(unpack(args))
+end
+end
+end)
+end)
+Eggs:Toggle("Open three", function(toggle)
+spawn(function()
+_G.three = toggle
+while wait(0.1) and _G.three do
+if(_G.egg) then
+local args = {
+[1] = _G.egg,
+[2] = "R"
+}
+game:GetService("ReplicatedStorage").RemoteEvents.EggOpen:FireServer(unpack(args))
+end
+end
+end)
+end)
+Eggs:Box("Eggname", "string", function(value)
+_G.egg = tostring(value)
 end)
