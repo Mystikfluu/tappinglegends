@@ -64,10 +64,21 @@ end
 end
 end)
 end)
-
+if(_G.ws == nil) then
+_G.ws = 16
+end
+if(_G.speed) then else
+game.Players.LocalPlayer.Character.Humanoid.Changed:Connect(function()
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.ws
+end)
+_G.speed = true
+end
 Main:Box("DeleteClicks", "number", function(value)
 _G.deletecm = value
 end)
 Main:Box("DeleteDiamonds", "number", function(value)
 _G.deletedm = value
+end)
+Main:Box("WalkSpeed", "number", function(value)
+_G.ws = tonumber(value)
 end)
